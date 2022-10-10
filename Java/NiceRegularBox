@@ -1,0 +1,132 @@
+// Nice Regular Box
+
+import java.util.Scanner;
+import java.util.Arrays;
+
+
+public class NiceRegularBox {
+	//Main
+	public static void main(String[] args){
+	
+		String[] textIn = returnInput();
+
+		//longest string value
+		int max = longestString(textIn);
+
+		//Nice Regular Box Array
+		String[] textBox = createTextBox(textIn, max);
+
+		//Prints the box!
+		printTextBox(textBox);
+	}
+
+	public static String[] returnInput(){
+		/*
+		*Inputs: none
+		*Returns: array as long as the user specified and with inputted text for each index
+		*Preconditions: java.util.Scanner must be imported
+		*/
+
+		//Import scanner
+		Scanner scanner = new Scanner(System.in);
+
+		//Number of lines input
+		System.out.print("Enter the number of lines: ");
+		int numberOfLines = scanner.nextInt();
+		scanner.nextLine();
+
+		//Create 'numberOfLines' long array titled: 'textIn'
+		String[] textIn = new String[numberOfLines];
+
+		//Fill array with 'numberOfLines' row(s) of text
+		for (int i = 0; i <= textIn.length - 1; i++){
+			System.out.print("Enter some text: ");
+			textIn[i] = scanner.nextLine();
+		}
+		//Return
+		return textIn;
+	}
+
+	public static int longestString(String[] textIn){
+		/* Intakes the textIn array and determines the longest string within
+		*Inputs: textIn[] 
+		*Returns: max, integer value of the longest string from the array textIn[]
+		*Preconditions: the function 'returnInput' has been run and returned an array
+		*/
+
+		int max = 0;
+		for (int i = 0; i <= textIn.length - 1; i++){
+			if(textIn[i].length() > max){
+				max = textIn[i].length();
+			} 
+		}
+		return max;
+	}
+
+	public static String[] createTextBox(String[] textIn, int max){
+		/* Creates an array with the desired format and appropiate spacing
+		*Inputs: textIn[], int max
+		*Returns: An array with the proper text for each line
+		*Preconditions: 'returnInput()' should have returned an array containing input
+		*/
+
+		//Variables for use!
+		int longStr = max + 4; //length of the longest string in the input array
+		int textBoxLength = (textIn.length + 2); //length of the final array
+		String plus = "+";
+		String space = " ";
+		String bars = plus.repeat(longStr);
+		String[] textBox = new String[textBoxLength]; //create an array which is 2 indicies larger than textIn[]
+			//make the zero and last indicies longStr many '+'s
+			textBox[0] = bars;
+			textBox[textBox.length - 1] = bars;
+
+		//interate through textIn[] adding the appropriate amount of spaces 
+		//add them in respective indicies
+		for (int i = 0; i <= textIn.length - 1; i ++){
+
+			//should add the longest string's text
+			if(textIn[i].length() == max){
+				// make sides of box
+				String finalString = "+ " + textIn[i] + " +";
+				
+				// add to the text box
+				textBox[i+1] = finalString;
+			}else if (textIn[i].length() < max){
+				
+				// amount of spaces to be padded
+				int amtPad = (max - textIn[i].length()); 
+				
+				// creates the variable and pads it
+				String paddedString =  textIn[i] + space.repeat(amtPad); 
+				
+				//make sides of the box
+				String finalString = "+ " + paddedString + " +";
+
+				// add to the text box
+				textBox[i+1] = finalString;
+				}
+			}
+		//return the textBox[] array with the format [+++++++,+ Hi  +,+ Bye +,+++++++].
+		return textBox;
+	}
+
+	public static void printTextBox(String[] box){
+		/* Iterates through TextBox[] and prints each line to the screen
+		*Inputs: textBox[]
+		*Returns: nothing
+		*Preconditions: longestString, createTextBox, and returnInput should have ran
+		*/
+
+		String tts = "";
+
+		for (int i = 0; i <= box.length - 1; i++){
+			if (i != (box.length - 1)){
+				tts += box[i] + "\n";
+			}else{
+				tts += box[i];
+			}
+		}
+		System.out.println(tts);
+	}
+}
