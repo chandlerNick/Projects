@@ -1,0 +1,65 @@
+
+public class Race{
+	//Shared data structure -- int is the primitive (Integer is the class)
+	public static int counter = 1;
+
+	//synchronized keyword makes the whole function atomic
+	public static synchronized int getAndIncrementCounter(){ //atomic (lock)
+		try{
+			Thread.sleep(10);
+		}catch (InterruptedException e){
+			//macht nix
+		}
+
+		//counter++ is not an atomic operation! (atomic = indivisible)
+		//coutner++ irl
+		//	1. load contents of memory of counter into a register
+		//	2. load contents of memory of ocunter into a second register
+		//	3. add 1 to the register
+		//	4. save contents of first register to memory location of counter
+		//	5. return value of second register
+		
+		/*
+		int temp;
+		synchronized (counter) { //can synchronize sections of the code 
+								// typically better to do in your method signature
+			temp = counter++;
+		}
+		//would return temp;
+		*/
+		return counter++;
+	}
+
+	public static void main(String[] args){
+		
+		/*
+		for (int i = 0; i < 200; i++){
+			System.out.println(getAndIncrementCounter());
+		}
+		*/
+		//PrintThread1 pt1 = new PrintThread1();
+		int max = 100;
+		Thread pt1 = new Thread(() -> {	//Create an anonymous function -- lambda; -> means does this.
+			for(int i = 0; i < max; i++){
+				System.out.println("-->" + getAndIncrementCounter());
+			}
+		});
+
+
+		//PrintThread2 pt2 = new PrintThread2();
+		//pt1.start(); //pt1.join(); //waits for the task to 
+		
+		//pt2.start(); //pt2.join(); //waits for the task to 
+
+		Thread pt2 = new Thread(() -> {
+			for(int i = 0; i < 100; i++){
+				System.out.println(">" + getAndIncrementCounter());
+			}
+		});
+		pt1.start();
+		pt2.start();
+
+
+	}
+
+}
