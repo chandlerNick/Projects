@@ -1,6 +1,7 @@
 #Author: Nick Chandler
 #Date: 2/28/2021
 #Description: A5 Food tracker using TKinter to prompt dialogue boxes. Also with the ability to close and open the program multiple times before calculating the total counts for each data category.
+#Note: This will create two files, one which holds food items and one which holds records
 
 def main():
     """ This is the main function, contains the basic program script, calling other functions
