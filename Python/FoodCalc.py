@@ -156,4 +156,3 @@ if __name__ == "__main__": #Use of a conditional
     import json
     import datetime
     main()
-
